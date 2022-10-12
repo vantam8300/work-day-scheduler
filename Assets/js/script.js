@@ -35,10 +35,9 @@ function init() {
 
         let hourEl = $(`<div class="hour col-1">${hr.format("hA")}</div>`);
         
-        let event = $(`<textarea data-number="${hr.format("hA")}" class="${color(hr)} description col-10">${eventText}</textarea>`)
+        let event = $(`<textarea data-number="${hr.format("hA")}" class="${color(hr)} description col-10">${eventText}</textarea>`);
 
-        let button = $(`<button data-number="${hr.format("hA")}" class="saveBtn col-1"><i class="fas fa-save"></i></button>`)
-
+        let button = $(`<button data-number="${hr.format("hA")}" class="saveBtn col-1"><i class="fas fa-save"></i></button>`);
 
         rowEl.append(hourEl);
         rowEl.append(event);
@@ -70,10 +69,19 @@ timeBlock.on("click", ".saveBtn", function(event) {
     // get the index of save button is clicked
     var indexTimeBlock = $(event.currentTarget).data("number");
 
+    // getting value of textarea
     var description = $(`textarea[data-number="${indexTimeBlock}"]`).val();
 
-    dataObj[indexTimeBlock] = description
-    console.log(dataObj)
-    localStorage.setItem("data",JSON.stringify(dataObj));
-    
+    // check whether textarea is empty or not
+    if (description != "") {
+        // adding to data object
+        dataObj[indexTimeBlock] = description
+
+        //save to local storage
+        localStorage.setItem("data",JSON.stringify(dataObj));
+        
+        // display message to the webpage
+        $("#notificaiton").append('Appointment Added to <span style="color: red;">localStorage </span><i class="fa fa-check"></i>');
+    }
+   
 });
